@@ -6,20 +6,20 @@ use Illuminate\Http\Request;
 
 class PaypalController extends Controller
 {
-    public function pay()
+    public function subscribe()
     {
-        return view('pay');
+        return view('subscribe');
     }
 
-    public function success(Request $request)
+    public function subscriptionSuccess(Request $request)
     {
-        // Handle the payment success
-        return "Payment successful!";
+        // Here you can handle the success logic, such as storing subscription details in the database.
+        return view('subscription-success');
     }
 
-    public function cancel()
+    public function subscriptionCancel()
     {
-        // Handle the payment cancellation
-        return "Payment canceled!";
+        // Here you can handle the cancellation logic.
+        return view('subscription-cancel');
     }
 }

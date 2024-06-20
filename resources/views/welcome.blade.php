@@ -11,7 +11,7 @@
         data-sdk-integration-source="button-factory"></script>
     <script type="text/javascript">
         function payPage() {
-            window.location.href = "{{ route('payment-page') }}";
+            window.location.href = "{{ route('subscribe-page') }}";
         }
     </script>
 </head>

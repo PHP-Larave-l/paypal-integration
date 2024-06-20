@@ -17,9 +17,10 @@ use App\Http\Controllers\PayPalController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/payment-page', function () {
-    return view('pay');
-})->name('payment-page');
-Route::get('/pay', [PayPalController::class, 'pay'])->name('pay');
-Route::get('/success', [PayPalController::class, 'success'])->name('success');
-Route::get('/cancel', [PayPalController::class, 'cancel'])->name('cancel');
+Route::get('/subscribe-page', function () {
+    return view('subscribe');
+})->name('subscribe-page');
+
+Route::get('/subscribe', [PayPalController::class, 'subscribe'])->name('subscribe');
+Route::get('/subscription-success', [PayPalController::class, 'subscriptionSuccess'])->name('subscription-success');
+Route::get('/subscription-cancel', [PayPalController::class, 'subscriptionCancel'])->name('subscription-cancel');
