@@ -6,9 +6,15 @@ use Illuminate\Http\Request;
 
 class PaypalController extends Controller
 {
-    public function subscribe()
+    public function showSubscriptionForm()
     {
         return view('subscribe');
+    }
+
+    public function createSubscription(Request $request)
+    {
+        $planId = $request->input('plan');
+        return view('create-subscription', compact('planId'));
     }
 
     public function subscriptionSuccess(Request $request)

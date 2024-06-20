@@ -52,51 +52,28 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subscribe with PayPal</title>
-    <script
-        src="https://www.paypal.com/sdk/js?client-id={{ env('PAYPAL_SANDBOX_CLIENT_ID') }}&vault=true&intent=subscription">
-    </script>
+    <title>Select Subscription Plan</title>
 </head>
-
 <body>
-    <h1>Subscribe to Our Plan</h1>
-    <div id="paypal-button-container"></div>
-
-    <script>
-        paypal.Buttons({
-            createSubscription: function(data, actions) {
-                return actions.subscription.create({
-                    'plan_id': '{{ env('PAYPAL_PLAN_ID') }}'
-                });
-            },
-            // createOrder: function(data, actions) {
-            //     return actions.order.create({
-            //         purchase_units: [{
-            //             amount: {
-            //                 value: '0.01' // Replace with the actual amount
-            //             }
-            //         }]
-            //     });
-            // },
-
-            onApprove: function(data, actions) {
-                // Redirect to subscription success page
-                window.location.href = "{{ route('subscription-success') }}";
-            },
-            onCancel: function(data) {
-                // Redirect to subscription cancel page
-                window.location.href = "{{ route('subscription-cancel') }}";
-            },
-            onError: function(err) {
-                console.error('An error occurred during the subscription process:', err);
-                alert('An error occurred during the subscription process. Please try again.');
-            }
-        }).render('#paypal-button-container');
-    </script>
+    <h1>Select Your Subscription Plan</h1>
+    <form action="{{ route('create-subscription') }}" method="POST">
+        @csrf
+        <div>
+            <label>
+                <input type="radio" name="plan" value="{{ env('PAYPAL_BASIC_PLAN_ID') }}" required>
+                Basic Plan - $10/month
+            </label>
+        </div>
+        <div>
+            <label>
+                <input type="radio" name="plan" value="{{ env('PAYPAL_PREMIUM_PLAN_ID') }}" required>
+                Premium Plan - $15/month
+            </label>
+        </div>
+        <button type="submit">Subscribe</button>
+    </form>
 </body>
-
 </html>

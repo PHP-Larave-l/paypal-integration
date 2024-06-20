@@ -21,6 +21,7 @@ Route::get('/subscribe-page', function () {
     return view('subscribe');
 })->name('subscribe-page');
 
-Route::get('/subscribe', [PayPalController::class, 'subscribe'])->name('subscribe');
+Route::get('/subscribe', [PayPalController::class, 'showSubscriptionForm'])->name('subscribe');
+Route::post('/create-subscription', [PayPalController::class, 'createSubscription'])->name('create-subscription');
 Route::get('/subscription-success', [PayPalController::class, 'subscriptionSuccess'])->name('subscription-success');
 Route::get('/subscription-cancel', [PayPalController::class, 'subscriptionCancel'])->name('subscription-cancel');
