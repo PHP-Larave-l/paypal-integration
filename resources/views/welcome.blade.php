@@ -1,23 +1,3 @@
-{{-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-
-<body>
-    <h2>Paypal integration</h2>
-    <h2>Payemt: 20$</h2>
-
-    <button type="submit">Pay</button>
-</body>
-
-</html> --}}
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title> PayPal Checkout Integration | Server Demo </title>
+    <script
+        src="https://www.paypal.com/sdk/js?client-id={{ env('PAYPAL_SANDBOX_CLIENT_ID') }}&vault=true&intent=subscription&currency={{ env('PAYPAL_CURRENCY') }}"
+        data-sdk-integration-source="button-factory"></script>
+    <script type="text/javascript">
+        function payPage() {
+            window.location.href = "{{ route('payment-page') }}";
+        }
+    </script>
 </head>
 
 <body>
@@ -43,9 +31,7 @@
     <br>
 
     <div id="paypal-button-container-P-41X03904E8095424UMZZGVWY"></div>
-    <script
-        src="https://www.paypal.com/sdk/js?client-id=AfSnYFNDsIv49_avn9dXOvrbmnCeX1--J9JKFbJjf7OF6lZV3fuHpG2ok4dZNS3zTKUomzLRDaBFYHu7&vault=true&intent=subscription"
-        data-sdk-integration-source="button-factory"></script>
+
     <script>
         // Find which button select
         function handleClick(radioBtn) {
@@ -72,9 +58,9 @@
                     body: JSON.stringify({
                         "value": productValue
                     })
-                }).then(function(res){
+                }).then(function(res) {
                     return res.json();
-                }).then(function(orderData){
+                }).then(function(orderData) {
                     return orderData.id;
                 });
             },
@@ -104,7 +90,7 @@
                         if (orderData.debug_id) msg += ' (' + orderData.debug_id + ')';
                         return alert(
                             msg
-                            ); // Show a failure message (try to avoid alerts in production environments)
+                        ); // Show a failure message (try to avoid alerts in production environments)
                     }
 
                     // Successful capture! For demo purposes:
@@ -122,6 +108,9 @@
             }
         }).render('#paypal-button-container-P-41X03904E8095424UMZZGVWY'); // Renders the PayPal button
     </script>
+    <br>
+
+    <button onclick="payPage()">Go to New Page</button>
 </body>
 
 </html>
