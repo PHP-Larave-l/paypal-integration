@@ -29,30 +29,57 @@
 </head>
 
 <body>
-    <!-- Set up a container element for the button -->
-    <div id="paypal-button-container"></div>
+    <p>Select a product</p>
+    <input type="radio" id="plan-1" name="paypalPlans" onclick="handleClick(this)" value="plan-1">
+    <label for="plan-1">Plan 1 = 1.5$</label><br>
 
-    <!-- Include the PayPal JavaScript SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+    <p>Select a product</p>
+    <input type="radio" id="plan-2" name="paypalPlans" onclick="handleClick(this)" value="plan-2">
+    <label for="plan-2">Plan 1 = 2$</label><br>
 
+    <p>Select a product</p>
+    <input type="radio" id="plan-3" name="paypalPlans" onclick="handleClick(this)" value="plan-3">
+    <label for="plan-3">Plan 1 = 5$</label><br>
+    <br>
+
+    <div id="paypal-button-container-P-41X03904E8095424UMZZGVWY"></div>
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=AfSnYFNDsIv49_avn9dXOvrbmnCeX1--J9JKFbJjf7OF6lZV3fuHpG2ok4dZNS3zTKUomzLRDaBFYHu7&vault=true&intent=subscription"
+        data-sdk-integration-source="button-factory"></script>
     <script>
-        // Render the PayPal button into #paypal-button-container
-        paypal.Buttons({
+        // Find which button select
+        function handleClick(radioBtn) {
+            productValue = radioBtn.value;
+            console.log(productValue);
+        }
 
-            // Call your server to set up the transaction
+        paypal.Buttons({
+            style: {
+                shape: 'pill',
+                color: 'blue',
+                layout: 'vertical',
+                label: 'subscribe'
+            },
+            createSubscription: function(data, actions) {
+                return actions.subscription.create({
+                    /* Creates the subscription */
+                    plan_id: 'P-41X03904E8095424UMZZGVWY'
+                });
+            },
             createOrder: function(data, actions) {
-                return fetch('/demo/checkout/api/paypal/order/create/', {
-                    method: 'post'
-                }).then(function(res) {
+                return fetch('api/paypal/order/create', {
+                    method: 'post',
+                    body: JSON.stringify({
+                        "value": productValue
+                    })
+                }).then(function(res){
                     return res.json();
-                }).then(function(orderData) {
+                }).then(function(orderData){
                     return orderData.id;
                 });
             },
-
-            // Call your server to finalize the transaction
             onApprove: function(data, actions) {
-                return fetch('/demo/checkout/api/paypal/order/' + data.orderID + '/capture/', {
+                return fetch('/api/paypal/order/' + data.orderID + '/capture/', {
                     method: 'post'
                 }).then(function(res) {
                     return res.json();
@@ -76,7 +103,8 @@
                         if (errorDetail.description) msg += '\n\n' + errorDetail.description;
                         if (orderData.debug_id) msg += ' (' + orderData.debug_id + ')';
                         return alert(
-                        msg); // Show a failure message (try to avoid alerts in production environments)
+                            msg
+                            ); // Show a failure message (try to avoid alerts in production environments)
                     }
 
                     // Successful capture! For demo purposes:
@@ -92,8 +120,7 @@
                     // Or go to another URL:  actions.redirect('thank_you.html');
                 });
             }
-
-        }).render('#paypal-button-container');
+        }).render('#paypal-button-container-P-41X03904E8095424UMZZGVWY'); // Renders the PayPal button
     </script>
 </body>
 
