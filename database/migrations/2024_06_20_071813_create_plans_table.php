@@ -14,7 +14,7 @@ class CreatePlansTable extends Migration
     public function up()
     {
         Schema::create('plans', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name');
             $table->float('price', 10, 2);
             $table->enum('interval', ['DAY', 'WEEK', 'MONTH', 'YEAR'])->comment('DAY(365) | WEEK(52) | MONTH(12) | YEAR(1)');
@@ -22,6 +22,7 @@ class CreatePlansTable extends Migration
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      *

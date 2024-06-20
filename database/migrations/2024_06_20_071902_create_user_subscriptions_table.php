@@ -15,8 +15,8 @@ class CreateUserSubscriptionsTable extends Migration
     {
         Schema::create('user_subscriptions', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('user_id')->nullable(); // Use unsignedBigInteger for compatibility
-            $table->unsignedInteger('plan_id')->nullable();
+            $table->unsignedBigInteger('user_id'); // Use unsignedBigInteger for compatibility
+            $table->unsignedBigInteger('plan_id');
             $table->string('paypal_order_id')->nullable();
             $table->string('paypal_plan_id')->nullable();
             $table->string('paypal_subscr_id', 100)->nullable();
@@ -33,7 +33,7 @@ class CreateUserSubscriptionsTable extends Migration
 
             // Foreign key constraints
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('plan_id')->references('id')->on('plans')->onDelete('set null');
+            $table->foreign('plan_id')->references('id')->on('plans')->onDelete('cascade');
 
             $table->index('paypal_subscr_id'); // Index for quick lookup by PayPal subscription ID
         });
