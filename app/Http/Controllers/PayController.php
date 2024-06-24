@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class PaypalController extends Controller
+class PayController extends Controller
 {
     public function showSubscriptionForm()
     {
@@ -14,7 +14,9 @@ class PaypalController extends Controller
     public function createSubscription(Request $request)
     {
         $planId = $request->input('plan');
-        return view('create-subscription', compact('planId'));
+        $planName = $request->input('plan_name');
+        $price = $request->input('price');
+        return view('create-subscription', compact('planId', 'planName', 'price'));
     }
 
     public function subscriptionSuccess(Request $request)
